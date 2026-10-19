@@ -16,11 +16,16 @@ export function getVaultRoot() {
   return (app.vault.adapter as FileSystemAdapter).getBasePath();
 }
 
+// Папка плагина относительно хранилища. Задаётся при загрузке из manifest.dir:
+// в оригинале была зашита строкой со старым id и «.obsidian».
+let pluginDir = '.obsidian/plugins/sb-zotero-integration';
+
+export function setPluginDir(dir: string) {
+  pluginDir = dir;
+}
+
 export function getExeRoot() {
-  return path.join(
-    getVaultRoot(),
-    './.obsidian/plugins/obsidian-zotero-desktop-connector/'
-  );
+  return path.join(getVaultRoot(), pluginDir);
 }
 
 export function getExeName() {
