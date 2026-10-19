@@ -133,8 +133,8 @@ export function AssetDownloader(props: {
   }, []);
 
   const desc = [
-    'Extracting data from PDFs requires an external tool.',
-    'This plugin will still work without it, but annotations will not be included in exports.',
+    'Annotations stored inside PDF files by other apps are extracted with an external tool.',
+    'Annotations made in the Zotero reader are imported without it.',
   ];
 
   const overrideDesc = (
