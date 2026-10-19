@@ -14,6 +14,7 @@ import { CiteKey, getCiteKeyFromAny, getCiteKeys } from './cayw';
 import { processZoteroAnnotationNotes } from './exportNotes';
 import { extractAnnotations } from './extractAnnotations';
 import {
+  getAnnotationPage,
   getColorCategory,
   getLocalURI,
   mkMDDir,
@@ -136,8 +137,9 @@ function convertNativeAnnotation(
   }
 
   if (annotation.annotationPosition) {
-    if (annotation.annotationPosition.pageIndex) {
-      annot.page = annotation.annotationPosition.pageIndex + 1
+    const page = getAnnotationPage(annotation.annotationPosition);
+    if (page !== undefined) {
+      annot.page = page;
     }
 
     if (annotation.annotationPosition.rects) {

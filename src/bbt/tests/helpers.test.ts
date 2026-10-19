@@ -1,4 +1,5 @@
 import {
+  getAnnotationPage,
   getPort,
   mkMDDir,
   replaceIllegalChars,
@@ -95,3 +96,19 @@ describe('sanitizeFilePath()', () => {
     expect(replaceIllegalChars('*hello?')).toBe('hello');
   });
 });
+
+describe('getAnnotationPage()', () => {
+  it('numbers the first page as 1', () => {
+    expect(getAnnotationPage({ pageIndex: 0 })).toBe(1);
+  });
+  it('numbers other pages from one', () => {
+    expect(getAnnotationPage({ pageIndex: 1 })).toBe(2);
+    expect(getAnnotationPage({ pageIndex: 41 })).toBe(42);
+  });
+  it('returns undefined without a page index', () => {
+    expect(getAnnotationPage(undefined)).toBeUndefined();
+    expect(getAnnotationPage({})).toBeUndefined();
+    expect(getAnnotationPage({ pageIndex: null })).toBeUndefined();
+  });
+});
+

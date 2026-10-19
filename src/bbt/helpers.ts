@@ -166,3 +166,17 @@ export function getLocalURI(
 
   return url;
 }
+
+/**
+ * Номер страницы (с единицы) из позиции аннотации Zotero.
+ * У первой страницы pageIndex = 0 — проверка на истинность теряла её номер.
+ */
+export function getAnnotationPage(position?: {
+  pageIndex?: number | null;
+}): number | undefined {
+  const pageIndex = position?.pageIndex;
+  if (typeof pageIndex !== 'number' || !Number.isFinite(pageIndex)) {
+    return undefined;
+  }
+  return pageIndex + 1;
+}
