@@ -51,6 +51,10 @@ function SettingsComponent({
 
   const [concat, setConcat] = React.useState(!!settings.shouldConcat);
 
+  const [pdfUtility, setPDFUtility] = React.useState(
+    !!settings.enablePDFUtility
+  );
+
   const updateCite = React.useCallback(
     debounce(
       (index: number, format: CitationFormat) => {
@@ -117,7 +121,23 @@ function SettingsComponent({
   return (
     <div>
       <SettingItem name="General Settings" isHeading />
-      <AssetDownloader settings={settings} updateSetting={updateSetting} />
+      <SettingItem
+        name="PDF utility (pdfannots2json)"
+        description="Optional. Only needed for annotations stored inside PDF files by other apps. Annotations made in the Zotero reader are imported without it."
+      >
+        <div
+          onClick={() => {
+            setPDFUtility((state) => {
+              updateSetting('enablePDFUtility', !state);
+              return !state;
+            });
+          }}
+          className={`checkbox-container${pdfUtility ? ' is-enabled' : ''}`}
+        />
+      </SettingItem>
+      {pdfUtility && (
+        <AssetDownloader settings={settings} updateSetting={updateSetting} />
+      )}
       <SettingItem
         name="Database"
         description="Supports Zotero and Juris-M. Alternatively a custom port number can be specified."

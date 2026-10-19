@@ -600,7 +600,8 @@ export async function exportToMarkdown(
   const importDate = moment();
   const { database, exportFormat, settings } = params;
   const sourcePath = getATemplatePath(params);
-  const canExtract = doesEXEExist();
+  const canExtract =
+    !!settings.enablePDFUtility && doesEXEExist(settings.exeOverridePath);
 
   const citeKeys = explicitCiteKeys
     ? explicitCiteKeys
@@ -889,7 +890,8 @@ function getAStyle(settings: ZoteroConnectorSettings) {
 export async function dataExplorerPrompt(settings: ZoteroConnectorSettings) {
   const database = { database: settings.database, port: settings.port };
   const citeKeys = await getCiteKeys(database);
-  const canExtract = doesEXEExist();
+  const canExtract =
+    !!settings.enablePDFUtility && doesEXEExist(settings.exeOverridePath);
 
   if (!citeKeys.length) return null;
 

@@ -30,6 +30,7 @@ const citationCommandIDPrefix = 'zdc-';
 const exportCommandIDPrefix = 'zdc-exp-';
 const DEFAULT_SETTINGS: ZoteroConnectorSettings = {
   database: 'Zotero',
+  enablePDFUtility: false,
   noteImportFolder: '',
   pdfExportImageDPI: 120,
   pdfExportImageFormat: 'jpg',
@@ -316,8 +317,10 @@ export default class ZoteroConnector extends Plugin {
   }
 
   async updatePDFUtility() {
-    const { exeOverridePath, _exeInternalVersion, exeVersion } = this.settings;
-    if (exeOverridePath || !exeVersion) return;
+    const { exeOverridePath, _exeInternalVersion, exeVersion, enablePDFUtility } =
+      this.settings;
+    // Утилита необязательна: без явного включения ничего не скачиваем.
+    if (!enablePDFUtility || exeOverridePath || !exeVersion) return;
 
     if (
       exeVersion !== currentVersion ||

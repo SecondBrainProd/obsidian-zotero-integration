@@ -78,6 +78,8 @@ export interface ZoteroConnectorSettings {
   exeVersion?: string;
   _exeInternalVersion?: number;
   exeOverridePath?: string;
+  /** Внешняя утилита pdfannots2json для аннотаций, зашитых в сам PDF. По умолчанию выключена. */
+  enablePDFUtility?: boolean;
   exportFormats: ExportFormat[];
   noteImportFolder: string;
   openNoteAfterImport: boolean;
