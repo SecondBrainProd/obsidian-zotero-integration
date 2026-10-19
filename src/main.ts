@@ -1,5 +1,12 @@
 import Fuse from 'fuse.js';
-import { EditableFileView, Events, Plugin, TFile } from 'obsidian';
+import {
+  EditableFileView,
+  Events,
+  Notice,
+  Plugin,
+  TFile,
+  normalizePath,
+} from 'obsidian';
 import { shellPath } from 'shell-path';
 
 import { DataExplorerView, viewType } from './DataExplorerView';
@@ -26,6 +33,8 @@ import {
   ZoteroConnectorSettings,
 } from './types';
 
+/** id оригинального плагина — для переноса его настроек. */
+export const LEGACY_PLUGIN_ID = 'obsidian-zotero-desktop-connector';
 const citationCommandIDPrefix = 'zdc-';
 const exportCommandIDPrefix = 'zdc-exp-';
 const DEFAULT_SETTINGS: ZoteroConnectorSettings = {
@@ -287,12 +296,51 @@ export default class ZoteroConnector extends Plugin {
   }
 
   async loadSettings() {
-    const loadedSettings = await this.loadData();
+    let loadedSettings = await this.loadData();
+    let migrated = false;
+
+    if (!loadedSettings) {
+      loadedSettings = await this.readLegacySettings();
+      migrated = !!loadedSettings;
+    }
 
     this.settings = {
       ...DEFAULT_SETTINGS,
       ...loadedSettings,
     };
+
+    if (migrated) {
+      // Утилиту по умолчанию не включаем: её бинарник лежит в папке старого
+      // плагина, а в форке она необязательна.
+      this.settings.enablePDFUtility = false;
+      delete this.settings.exeVersion;
+      delete this.settings._exeInternalVersion;
+      await this.saveData(this.settings);
+      new Notice(
+        'Zotero Integration (Second Brain): settings imported from Zotero Integration. ' +
+          'Disable the original plugin to avoid duplicate commands. ' +
+          '/ Настройки перенесены из Zotero Integration. Отключите оригинальный плагин, чтобы команды не дублировались.',
+        15000
+      );
+    }
+  }
+
+  /**
+   * Настройки оригинального плагина (id obsidian-zotero-desktop-connector) —
+   * только чтение: у старого плагина ничего не меняем и не удаляем.
+   */
+  async readLegacySettings(): Promise<Partial<ZoteroConnectorSettings> | null> {
+    const legacyPath = normalizePath(
+      `${this.app.vault.configDir}/plugins/${LEGACY_PLUGIN_ID}/data.json`
+    );
+    try {
+      if (!(await this.app.vault.adapter.exists(legacyPath))) return null;
+      const data = JSON.parse(await this.app.vault.adapter.read(legacyPath));
+      return data && typeof data === 'object' ? data : null;
+    } catch (e) {
+      console.error('Zotero Integration (Second Brain): cannot read legacy settings', e);
+      return null;
+    }
   }
 
   async saveSettings() {
