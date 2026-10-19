@@ -1,6 +1,6 @@
 {
   "name": "sb-zotero-integration",
-  "version": "3.2.1",
+  "version": "1.0.0",
   "description": "Zotero Integration for Obsidian — Second Brain fork (citations, bibliographies, literature notes and annotations from Zotero)",
   "main": "main.js",
   "scripts": {
