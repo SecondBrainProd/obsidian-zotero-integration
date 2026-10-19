@@ -1,0 +1,114 @@
+/* Раскраска выносок Zotero по цвету выделения.
+   Школа Second Brain. Версия 3, 20260820.
+
+   Отличие от прежней версии: цвет задаётся не только переменной
+   --callout-color, но и напрямую — рамкой, фоном и цветом заголовка.
+   В части сборок Obsidian и тем переменную никто не подхватывает,
+   и выноска остаётся серой, хотя правило применилось. Прямые свойства
+   работают везде.  */
+
+/* Red */
+.callout[data-callout-metadata="#ff6666" i],
+.callout[data-callout-metadata="red" i] {
+  --callout-color: 205, 52, 92 !important;
+  border-color: rgba(205, 52, 92, 0.45) !important;
+  background-color: rgba(205, 52, 92, 0.08) !important;
+}
+.callout[data-callout-metadata="#ff6666" i] > .callout-title,
+.callout[data-callout-metadata="red" i] > .callout-title {
+  color: rgb(205, 52, 92) !important;
+  background-color: rgba(205, 52, 92, 0.15) !important;
+}
+
+/* Green */
+.callout[data-callout-metadata="#5fb236" i],
+.callout[data-callout-metadata="green" i] {
+  --callout-color: 114, 162, 100 !important;
+  border-color: rgba(114, 162, 100, 0.45) !important;
+  background-color: rgba(114, 162, 100, 0.08) !important;
+}
+.callout[data-callout-metadata="#5fb236" i] > .callout-title,
+.callout[data-callout-metadata="green" i] > .callout-title {
+  color: rgb(114, 162, 100) !important;
+  background-color: rgba(114, 162, 100, 0.15) !important;
+}
+
+/* Blue */
+.callout[data-callout-metadata="#2ea8e5" i],
+.callout[data-callout-metadata="blue" i] {
+  --callout-color: 52, 82, 255 !important;
+  border-color: rgba(52, 82, 255, 0.45) !important;
+  background-color: rgba(52, 82, 255, 0.08) !important;
+}
+.callout[data-callout-metadata="#2ea8e5" i] > .callout-title,
+.callout[data-callout-metadata="blue" i] > .callout-title {
+  color: rgb(52, 82, 255) !important;
+  background-color: rgba(52, 82, 255, 0.15) !important;
+}
+
+/* Purple */
+.callout[data-callout-metadata="#a28ae5" i],
+.callout[data-callout-metadata="purple" i] {
+  --callout-color: 157, 131, 242 !important;
+  border-color: rgba(157, 131, 242, 0.45) !important;
+  background-color: rgba(157, 131, 242, 0.08) !important;
+}
+.callout[data-callout-metadata="#a28ae5" i] > .callout-title,
+.callout[data-callout-metadata="purple" i] > .callout-title {
+  color: rgb(157, 131, 242) !important;
+  background-color: rgba(157, 131, 242, 0.15) !important;
+}
+
+/* Orange */
+.callout[data-callout-metadata="#f19837" i],
+.callout[data-callout-metadata="orange" i] {
+  --callout-color: 244, 164, 96 !important;
+  border-color: rgba(244, 164, 96, 0.45) !important;
+  background-color: rgba(244, 164, 96, 0.08) !important;
+}
+.callout[data-callout-metadata="#f19837" i] > .callout-title,
+.callout[data-callout-metadata="orange" i] > .callout-title {
+  color: rgb(244, 164, 96) !important;
+  background-color: rgba(244, 164, 96, 0.15) !important;
+}
+
+/* Yellow */
+.callout[data-callout-metadata="#ffd400" i],
+.callout[data-callout-metadata="yellow" i] {
+  --callout-color: 255, 236, 0 !important;
+  border-color: rgba(255, 236, 0, 0.45) !important;
+  background-color: rgba(255, 236, 0, 0.08) !important;
+}
+.callout[data-callout-metadata="#ffd400" i] > .callout-title,
+.callout[data-callout-metadata="yellow" i] > .callout-title {
+  color: rgb(255, 236, 0) !important;
+  background-color: rgba(255, 236, 0, 0.15) !important;
+}
+
+/* Magenta */
+.callout[data-callout-metadata="#e56eee" i],
+.callout[data-callout-metadata="magenta" i] {
+  --callout-color: 255, 33, 255 !important;
+  border-color: rgba(255, 33, 255, 0.45) !important;
+  background-color: rgba(255, 33, 255, 0.08) !important;
+}
+.callout[data-callout-metadata="#e56eee" i] > .callout-title,
+.callout[data-callout-metadata="magenta" i] > .callout-title {
+  color: rgb(255, 33, 255) !important;
+  background-color: rgba(255, 33, 255, 0.15) !important;
+}
+
+/* Gray */
+.callout[data-callout-metadata="#aaaaaa" i],
+.callout[data-callout-metadata="gray" i] {
+  --callout-color: 152, 152, 152 !important;
+  border-color: rgba(152, 152, 152, 0.45) !important;
+  background-color: rgba(152, 152, 152, 0.08) !important;
+}
+.callout[data-callout-metadata="#aaaaaa" i] > .callout-title,
+.callout[data-callout-metadata="gray" i] > .callout-title {
+  color: rgb(152, 152, 152) !important;
+  background-color: rgba(152, 152, 152, 0.15) !important;
+}
+
+.callout-icon { display: flex; }
