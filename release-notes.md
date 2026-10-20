@@ -1,4 +1,4 @@
-# Zotero Integration (Second Brain) 1.0.0
+# Zotero Integration (Second Brain) 4.0.0
 
 First release of the Second Brain fork of [Obsidian Zotero Integration](https://github.com/mgmeyers/obsidian-zotero-integration) by mgmeyers (based on 3.2.1).
 

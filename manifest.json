@@ -1,7 +1,7 @@
 {
 	"id": "sb-zotero-integration",
 	"name": "Zotero Integration (Second Brain)",
-	"version": "1.0.0",
+	"version": "4.0.0",
 	"minAppVersion": "1.14.4",
 	"description": "Insert and import citations, bibliographies, notes, and PDF annotations from Zotero. A maintained fork of Zotero Integration by mgmeyers.",
 	"author": "Second Brain",
