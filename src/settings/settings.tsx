@@ -14,6 +14,7 @@ import { CiteFormatSettings } from './CiteFormatSettings';
 import { ExportFormatSettings } from './ExportFormatSettings';
 import { Icon } from './Icon';
 import { SettingItem } from './SettingItem';
+import { L, t } from '../i18n';
 
 interface SettingsComponentProps {
   settings: ZoteroConnectorSettings;
@@ -120,10 +121,10 @@ function SettingsComponent({
 
   return (
     <div>
-      <SettingItem name="General Settings" isHeading />
+      <SettingItem name={t("General Settings")} isHeading />
       <SettingItem
-        name="PDF utility (pdfannots2json)"
-        description="Optional. Only needed for annotations stored inside PDF files by other apps. Annotations made in the Zotero reader are imported without it."
+        name={t("PDF utility (pdfannots2json)")}
+        description={t("Optional. Only needed for annotations stored inside PDF files by other apps. Annotations made in the Zotero reader are imported without it.")}
       >
         <div
           onClick={() => {
@@ -139,8 +140,8 @@ function SettingsComponent({
         <AssetDownloader settings={settings} updateSetting={updateSetting} />
       )}
       <SettingItem
-        name="Database"
-        description="Supports Zotero and Juris-M. Alternatively a custom port number can be specified."
+        name={t("Database")}
+        description={t("Supports Zotero and Juris-M. Alternatively a custom port number can be specified.")}
       >
         <select
           className="dropdown"
@@ -157,27 +158,27 @@ function SettingsComponent({
         >
           <option value="Zotero">Zotero</option>
           <option value="Juris-M">Juris-M</option>
-          <option value="Custom">Custom</option>
+          <option value="Custom">{t("Custom")}</option>
         </select>
       </SettingItem>
       {useCustomPort ? (
         <SettingItem
-          name="Port number"
-          description="If a custom port number has been set in Zotero, enter it here."
+          name={t("Port number")}
+          description={t("If a custom port number has been set in Zotero, enter it here.")}
         >
           <input
             onChange={(e) =>
               updateSetting('port', (e.target as HTMLInputElement).value)
             }
             type="number"
-            placeholder="Example: 23119"
+            placeholder={t("Example: 23119")}
             defaultValue={settings.port}
           />
         </SettingItem>
       ) : null}
       <SettingItem
-        name="Note Import Location"
-        description="Notes imported from Zotero will be added to this folder in your vault"
+        name={t("Note Import Location")}
+        description={t("Notes imported from Zotero will be added to this folder in your vault")}
       >
         <input
           onChange={(e) =>
@@ -188,13 +189,13 @@ function SettingsComponent({
           }
           type="text"
           spellCheck={false}
-          placeholder="Example: folder 1/folder 2"
+          placeholder={t("Example: folder 1/folder 2")}
           defaultValue={settings.noteImportFolder}
         />
       </SettingItem>
       <SettingItem
-        name="Open the created or updated note(s) after import"
-        description="The created or updated markdown files resulting from the import will be automatically opened."
+        name={t("Open the created or updated note(s) after import")}
+        description={t("The created or updated markdown files resulting from the import will be automatically opened.")}
       >
         <div
           onClick={() => {
@@ -209,8 +210,8 @@ function SettingsComponent({
         />
       </SettingItem>
       <SettingItem
-        name="Which notes to open after import"
-        description="Open either the first note imported, the last note imported, or all notes in new tabs."
+        name={t("Which notes to open after import")}
+        description={t("Open either the first note imported, the last note imported, or all notes in new tabs.")}
       >
         <select
           className="dropdown"
@@ -223,14 +224,14 @@ function SettingsComponent({
             )
           }
         >
-          <option value="first-imported-note">First imported note</option>
-          <option value="last-imported-note">Last imported note</option>
-          <option value="all-imported-notes">All imported notes</option>
+          <option value="first-imported-note">{t("First imported note")}</option>
+          <option value="last-imported-note">{t("Last imported note")}</option>
+          <option value="all-imported-notes">{t("All imported notes")}</option>
         </select>
       </SettingItem>
       <SettingItem
-        name="Enable Annotation Concatenation"
-        description="Annotations extracted from PDFs that begin with '+' will be appended to the previous annotation. Note: Annotation ordering is not always consistent and you may not always acheive the desire concatenation result"
+        name={t("Enable Annotation Concatenation")}
+        description={t("Annotations extracted from PDFs that begin with '+' will be appended to the previous annotation. Note: Annotation ordering is not always consistent and you may not always acheive the desire concatenation result")}
       >
         <div
           onClick={() => {
@@ -242,10 +243,10 @@ function SettingsComponent({
           className={`checkbox-container${concat ? ' is-enabled' : ''}`}
         />
       </SettingItem>
-      <SettingItem name="Citation Formats" isHeading />
+      <SettingItem name={t("Citation Formats")} isHeading />
       <SettingItem>
         <button onClick={addCite} className="mod-cta">
-          Add Citation Format
+          {t("Add Citation Format")}
         </button>
       </SettingItem>
       {citeFormatState.map((f, i) => {
@@ -260,10 +261,10 @@ function SettingsComponent({
         );
       })}
 
-      <SettingItem name="Import Formats" isHeading />
+      <SettingItem name={t("Import Formats")} isHeading />
       <SettingItem>
         <button onClick={addExport} className="mod-cta">
-          Add Import Format
+          {t("Add Import Format")}
         </button>
       </SettingItem>
       {exportFormatState.map((f, i) => {
@@ -279,11 +280,11 @@ function SettingsComponent({
       })}
 
       <SettingItem
-        name="Import Image Settings"
-        description="Rectangle annotations will be extracted from PDFs as images."
+        name={t("Import Image Settings")}
+        description={t("Rectangle annotations will be extracted from PDFs as images.")}
         isHeading
       />
-      <SettingItem name="Image Format">
+      <SettingItem name={t("Image Format")}>
         <select
           className="dropdown"
           defaultValue={settings.pdfExportImageFormat}
@@ -298,7 +299,7 @@ function SettingsComponent({
           <option value="png">png</option>
         </select>
       </SettingItem>
-      <SettingItem name="Image Quality (jpg only)">
+      <SettingItem name={t("Image Quality (jpg only)")}>
         <input
           min="0"
           max="100"
@@ -312,7 +313,7 @@ function SettingsComponent({
           defaultValue={settings.pdfExportImageQuality.toString()}
         />
       </SettingItem>
-      <SettingItem name="Image DPI">
+      <SettingItem name={t("Image DPI")}>
         <input
           min="0"
           onChange={(e) =>
@@ -326,9 +327,9 @@ function SettingsComponent({
         />
       </SettingItem>
       <SettingItem
-        name="Image OCR"
-        description={
-          <div>
+        name={t("Image OCR")}
+        description={L(
+<div>
             Attempt to extract text from images created by rectangle
             annotations. This requires that{' '}
             <a
@@ -351,8 +352,9 @@ function SettingsComponent({
               here on windows
             </a>
             .
-          </div>
-        }
+          </div>,
+<div>Пытаться распознать текст на изображениях из прямоугольных аннотаций. Для этого в системе должен быть установлен{' '}<a href="https://tesseract-ocr.github.io/tessdoc/" target="_blank" rel="noreferrer">Tesseract</a>. Установить его можно через{' '}<a href="https://brew.sh/" target="_blank" rel="noreferrer">Homebrew на Mac</a>, менеджеры пакетов Linux и{' '}<a href="https://github.com/UB-Mannheim/tesseract/wiki" target="_blank" rel="noreferrer">отсюда для Windows</a>.</div>
+)}
       >
         <div
           onClick={() =>
@@ -365,14 +367,15 @@ function SettingsComponent({
         />
       </SettingItem>
       <SettingItem
-        name="Tesseract path"
-        description={
-          <div>
+        name={t("Tesseract path")}
+        description={L(
+<div>
             Required: An absolute path to the tesseract executable. This can be
             found on mac and linux with the terminal command{' '}
             <pre>which tesseract</pre>
-          </div>
-        }
+          </div>,
+<div>Обязательно: абсолютный путь к исполняемому файлу Tesseract. На Mac и Linux его покажет команда в терминале{' '}<pre>which tesseract</pre></div>
+)}
       >
         <input
           ref={tessPathRef}
@@ -387,7 +390,7 @@ function SettingsComponent({
         />
         <div
           className="clickable-icon setting-editor-extra-setting-button"
-          aria-label="Attempt to find tesseract automatically"
+          aria-label={t("Attempt to find tesseract automatically")}
           onClick={async () => {
             try {
               const pathToTesseract = await which('tesseract');
@@ -396,12 +399,12 @@ function SettingsComponent({
                 updateSetting('pdfExportImageTesseractPath', pathToTesseract);
               } else {
                 new Notice(
-                  'Unable to find tesseract on your system. If it is installed, please manually enter a path.'
+                  t("Unable to find tesseract on your system. If it is installed, please manually enter a path.")
                 );
               }
             } catch (e) {
               new Notice(
-                'Unable to find tesseract on your system. If it is installed, please manually enter a path.'
+                t("Unable to find tesseract on your system. If it is installed, please manually enter a path.")
               );
               console.error(e);
             }
@@ -411,9 +414,9 @@ function SettingsComponent({
         </div>
       </SettingItem>
       <SettingItem
-        name="Image OCR Language"
-        description={
-          <div>
+        name={t("Image OCR Language")}
+        description={L(
+<div>
             Optional: defaults to english. Multiple languages can be specified
             like so: <pre>eng+deu</pre>. Each language must be installed on your
             system.{' '}
@@ -433,8 +436,9 @@ function SettingsComponent({
               here for a description of the language codes
             </a>
             )
-          </div>
-        }
+          </div>,
+<div>Необязательно: по умолчанию — английский. Несколько языков указываются так: <pre>eng+rus</pre>. Каждый язык должен быть установлен в системе.{' '}<a href="https://github.com/tesseract-ocr/tessdata" target="_blank" rel="noreferrer">Языковые файлы можно скачать здесь</a>. (Коды языков —{' '}<a href="https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html" target="_blank" rel="noreferrer">здесь</a>.)</div>
+)}
       >
         <input
           onChange={(e) =>
@@ -448,8 +452,8 @@ function SettingsComponent({
         />
       </SettingItem>
       <SettingItem
-        name="Tesseract data directory"
-        description="Optional: supply an absolute path to the directory where tesseract's language files reside. This folder should include *.traineddata files for your selected languages."
+        name={t("Tesseract data directory")}
+        description={t("Optional: supply an absolute path to the directory where tesseract's language files reside. This folder should include *.traineddata files for your selected languages.")}
       >
         <input
           ref={tessDataPathRef}
@@ -464,7 +468,7 @@ function SettingsComponent({
         />
         <div
           className="clickable-icon setting-editor-extra-setting-button"
-          aria-label="Select the tesseract data directory"
+          aria-label={t("Select the tesseract data directory")}
           onClick={() => {
             const path = require('electron').remote.dialog.showOpenDialogSync({
               properties: ['openDirectory'],

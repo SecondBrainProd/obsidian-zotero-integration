@@ -8,6 +8,7 @@ import { PersistExtension } from './bbt/template.env';
 import { sanitizeObsidianPath } from './bbt/template.helpers';
 import ZoteroConnector from './main';
 import { ExportFormat, ExportToMarkdownParams } from './types';
+import { t } from './i18n';
 
 export const viewType = 'zdc-debug';
 
@@ -159,7 +160,7 @@ function DataExporer({ plugin }: { plugin: ZoteroConnector }) {
   const promptForSelection = React.useCallback(() => {
     dataExplorerPrompt(plugin.settings).then((res) => {
       if (!res || res.length === 0) {
-        setError('No data retrieved');
+        setError(t('No data retrieved'));
       } else {
         setError(null);
         setData(res[0]);
@@ -171,7 +172,7 @@ function DataExporer({ plugin }: { plugin: ZoteroConnector }) {
     <div className="zt-json-viewer">
       <div className="zt-json-viewer__btns">
         <div>
-          <button onClick={promptForSelection}>Prompt For Selection</button>
+          <button onClick={promptForSelection}>{t('Prompt For Selection')}</button>
         </div>
         <div>
           <select
@@ -186,7 +187,7 @@ function DataExporer({ plugin }: { plugin: ZoteroConnector }) {
               }
             }}
           >
-            <option value="">Preview Import Format</option>
+            <option value="">{t('Preview Import Format')}</option>
             {plugin.settings.exportFormats.map((e, index) => {
               return (
                 <option key={index} value={index}>
@@ -254,7 +255,7 @@ export class DataExplorerView extends ItemView {
   }
 
   getDisplayText() {
-    return 'Zotero Data Explorer';
+    return t('Zotero Data Explorer');
   }
 
   mountJsonViewer() {
@@ -284,7 +285,7 @@ const labelRenderer: LabelRenderer = (keyPathWithRoot, nodeType) => {
     const menu = new Menu().addItem((i) =>
       i
         .setIcon('lucide-copy')
-        .setTitle('Copy template path')
+        .setTitle(t('Copy template path'))
         .onClick(() => {
           navigator.clipboard.writeText(`{{${path}}}`);
         })
@@ -294,7 +295,7 @@ const labelRenderer: LabelRenderer = (keyPathWithRoot, nodeType) => {
       menu.addItem((i) =>
         i
           .setIcon('lucide-copy')
-          .setTitle('Copy template for loop')
+          .setTitle(t('Copy template for loop'))
           .onClick(() => {
             navigator.clipboard.writeText(
               `{% for item in ${path} %}\n{% item %}\n{% endfor %}`
@@ -308,7 +309,7 @@ const labelRenderer: LabelRenderer = (keyPathWithRoot, nodeType) => {
 
   return (
     <span onContextMenu={isRoot ? undefined : handler}>
-      {isRoot ? 'Template Data' : keyPathWithRoot[0]}
+      {isRoot ? t('Template Data') : keyPathWithRoot[0]}
     </span>
   );
 };

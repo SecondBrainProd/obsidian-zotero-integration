@@ -4,6 +4,7 @@ import path from 'path';
 import { ensureExecutableSync, getExeName, getExeRoot } from 'src/helpers';
 
 import { LoadingModal } from './LoadingModal';
+import { t } from '../i18n';
 
 interface ExtractParams {
   noWrite?: boolean;
@@ -38,7 +39,7 @@ export async function extractAnnotations(
   params: ExtractParams,
   overridePath?: string
 ) {
-  const modal = new LoadingModal(app, 'Extracting annotations...');
+  const modal = new LoadingModal(app, t('Extracting annotations...'));
   modal.open();
 
   const args = [input];
@@ -68,7 +69,7 @@ export async function extractAnnotations(
     const isExecutable = ensureExecutableSync(overridePath);
 
     if (!isExecutable) {
-      new Notice(`Error: PDF utility is not executable`, 10000);
+      new Notice(t('Error: PDF utility is not executable'), 10000);
       return '[]';
     }
 
@@ -81,14 +82,14 @@ export async function extractAnnotations(
 
     if (result.stderr.toLowerCase().includes('password')) {
       new Notice(
-        `Error opening ${path.basename(input)}: PDF is password protected`,
+        t('Error opening {file}: PDF is password protected', { file: path.basename(input) }),
         10000
       );
       return '[]';
     }
 
     if (result.stderr && !result.stderr.includes('warning')) {
-      new Notice(`Error processing PDF: ${result.stderr}`, 10000);
+      new Notice(t('Error processing PDF: {error}', { error: result.stderr }), 10000);
       throw new Error(result.stderr);
     }
 
@@ -98,17 +99,17 @@ export async function extractAnnotations(
 
     if (e.message.toLowerCase().includes('password')) {
       new Notice(
-        `Error opening ${path.basename(input)}: PDF is password protected`,
+        t('Error opening {file}: PDF is password protected', { file: path.basename(input) }),
         10000
       );
       return '[]';
     } else if (e.message.toLowerCase().includes('type3')) {
-      new Notice(`Error processing annotations: ${e.message}`, 10000);
+      new Notice(t('Error processing annotations: {error}', { error: e.message }), 10000);
       return '[]';
     }
 
     console.error(e);
-    new Notice(`Error processing PDF: ${e.message}`, 10000);
+    new Notice(t('Error processing PDF: {error}', { error: e.message }), 10000);
     throw e;
   }
 }

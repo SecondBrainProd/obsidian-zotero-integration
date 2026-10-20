@@ -37,6 +37,7 @@ import {
   removeStartingSlash,
   wrapAnnotationTemplate,
 } from './template.helpers';
+import { t } from '../i18n';
 
 async function processNote(
   citeKey: CiteKey,
@@ -187,7 +188,7 @@ function convertNativeAnnotation(
         copyFileSync(input, imagePath);
       } catch (e) {
         new Notice(
-          'Error: unable to copy annotation image from Zotero into your vault',
+          t('Error: unable to copy annotation image from Zotero into your vault'),
           7000
         );
         console.error(e);
@@ -374,7 +375,7 @@ function errorToHelpfulNotification(
   new Notice(
     createFragment((f) => {
       f.createSpan({
-        text: `Error parsing template "${templatePath}": `,
+        text: t('Error parsing template "{path}": ', { path: templatePath }),
       });
       f.createEl('code', {
         text: generateHelpfulTemplateError(e, template),
@@ -823,7 +824,7 @@ export async function exportToMarkdown(
       createdOrUpdatedMarkdownFiles.push(markdownPath);
     } catch (e) {
       new Notice(
-        `Import failed for ${markdownPath}, check developer console for details`,
+        t('Import failed for {path}, check developer console for details', { path: markdownPath }),
         7000
       );
       console.error(e);

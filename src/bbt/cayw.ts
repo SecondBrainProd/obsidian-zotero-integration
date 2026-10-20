@@ -6,6 +6,7 @@ import { LoadingModal } from './LoadingModal';
 import { defaultHeaders, getPort } from './helpers';
 import { getBibFromCiteKeys } from './jsonRPC';
 import { ZQueue } from './queue';
+import { t } from '../i18n';
 
 export function getCiteKeyFromAny(item: any): CiteKey | null {
   if (!item.citekey && !item.citationKey) return null;
@@ -29,7 +30,7 @@ export async function isZoteroRunning(
 
   let modal: LoadingModal;
   if (!silent) {
-    modal = new LoadingModal(app, 'Fetching data from Zotero...');
+    modal = new LoadingModal(app, t('Fetching data from Zotero...'));
     modal.open();
   }
   const qid = Symbol();
@@ -53,7 +54,7 @@ export async function isZoteroRunning(
     modal?.close();
     !silent &&
       new Notice(
-        'Cannot connect to Zotero. Please ensure it is running and the Better BibTeX plugin is installed',
+        t('Cannot connect to Zotero. Please ensure it is running and the Better BibTeX plugin is installed'),
         10000
       );
     ZQueue.end(qid);
@@ -116,7 +117,7 @@ export async function getCAYW(
     win.show();
     console.error(e);
     modal.close();
-    new Notice(`Error processing citation: ${e.message}`, 10000);
+    new Notice(t('Error processing citation: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
     return null;
   }
@@ -185,7 +186,7 @@ export async function getCAYWJSON(database: DatabaseWithPort) {
     win.show();
     console.error(e);
     modal.close();
-    new Notice(`Error retrieving cite key: ${e.message}`, 10000);
+    new Notice(t('Error retrieving cite key: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
     return null;
   }

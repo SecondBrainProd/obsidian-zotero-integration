@@ -3,6 +3,7 @@ import fs from 'fs';
 import { FileSystemAdapter, Notice } from 'obsidian';
 import os from 'os';
 import path from 'path';
+import { t } from './i18n';
 
 export function getCurrentWindow() {
   return require('electron').remote.BrowserWindow.getFocusedWindow();
@@ -87,14 +88,14 @@ export async function checkEXEVersion(override?: string) {
     );
 
     if (result.stderr && !result.stderr.includes('warning')) {
-      new Notice(`Error checking PDF utility version: ${result.stderr}`, 10000);
+      new Notice(t('Error checking PDF utility version: {error}', { error: result.stderr }), 10000);
       throw new Error(result.stderr);
     }
 
     return result.stdout.trim();
   } catch (e) {
     console.error(e);
-    new Notice(`Error checking PDF utility version: ${e.message}`, 10000);
+    new Notice(t('Error checking PDF utility version: {error}', { error: e.message }), 10000);
     throw e;
   }
 }

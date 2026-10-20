@@ -32,6 +32,7 @@ import {
   ExportFormat,
   ZoteroConnectorSettings,
 } from './types';
+import { L, t } from './i18n';
 
 /** id оригинального плагина — для переноса его настроек. */
 export const LEGACY_PLUGIN_ID = 'obsidian-zotero-desktop-connector';
@@ -99,7 +100,7 @@ export default class ZoteroConnector extends Plugin {
 
     this.addCommand({
       id: 'zdc-insert-notes',
-      name: 'Insert notes into current document',
+      name: t('Insert notes into current document'),
       editorCallback: (editor) => {
         const database = {
           database: this.settings.database,
@@ -118,7 +119,7 @@ export default class ZoteroConnector extends Plugin {
 
     this.addCommand({
       id: 'zdc-import-notes',
-      name: 'Import notes',
+      name: t('Import notes'),
       callback: () => {
         const database = {
           database: this.settings.database,
@@ -137,7 +138,7 @@ export default class ZoteroConnector extends Plugin {
 
     this.addCommand({
       id: 'show-zotero-debug-view',
-      name: 'Data explorer',
+      name: t('Data explorer'),
       callback: () => {
         this.activateDataExplorer();
       },
@@ -317,9 +318,10 @@ export default class ZoteroConnector extends Plugin {
       delete this.settings._exeInternalVersion;
       await this.saveData(this.settings);
       new Notice(
-        'Zotero Integration (Second Brain): settings imported from Zotero Integration. ' +
-          'Disable the original plugin to avoid duplicate commands. ' +
-          '/ Настройки перенесены из Zotero Integration. Отключите оригинальный плагин, чтобы команды не дублировались.',
+        L(
+          'Zotero Integration (Second Brain): settings imported from Zotero Integration. Disable the original plugin to avoid duplicate commands.',
+          'Zotero Integration (Second Brain): настройки перенесены из Zotero Integration. Отключите оригинальный плагин, чтобы команды не дублировались.'
+        ),
         15000
       );
     }
@@ -377,7 +379,7 @@ export default class ZoteroConnector extends Plugin {
     ) {
       const modal = new LoadingModal(
         app,
-        'Updating Obsidian Zotero Integration PDF Utility...'
+        t('Updating Obsidian Zotero Integration PDF Utility...')
       );
       modal.open();
 

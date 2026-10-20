@@ -4,6 +4,7 @@ import React from 'react';
 import { StylesConfig } from 'react-select';
 
 import { cslList } from './cslList';
+import { t } from '../i18n';
 
 export const customSelectStyles: StylesConfig = {
   input: (provided) => {
@@ -80,11 +81,11 @@ export function loadCSLOptions(
 }
 
 export function NoOptionMessage() {
-  return <span>Type to search CSL styles</span>;
+  return <span>{t('Type to search CSL styles')}</span>;
 }
 
 export function NoFileOptionMessage() {
-  return <span>Type to search</span>;
+  return <span>{t('Type to search')}</span>;
 }
 
 export function buildFileSearch() {

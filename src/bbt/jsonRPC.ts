@@ -6,6 +6,7 @@ import { LoadingModal } from './LoadingModal';
 import { CiteKey, getCiteKeyFromAny, isZoteroRunning } from './cayw';
 import { defaultHeaders, getPort } from './helpers';
 import { ZQueue } from './queue';
+import { t } from '../i18n';
 
 export async function getNotesFromCiteKeys(
   citeKeys: CiteKey[],
@@ -13,7 +14,7 @@ export async function getNotesFromCiteKeys(
 ) {
   let res: string;
 
-  const modal = new LoadingModal(app, 'Fetching notes from Zotero...');
+  const modal = new LoadingModal(app, t('Fetching notes from Zotero...'));
   modal.open();
 
   const qid = Symbol();
@@ -35,7 +36,7 @@ export async function getNotesFromCiteKeys(
   } catch (e) {
     console.error(e);
     modal.close();
-    new Notice(`Error retrieving notes: ${e.message}`, 10000);
+    new Notice(t('Error retrieving notes: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
     return null;
   }
@@ -47,7 +48,7 @@ export async function getNotesFromCiteKeys(
     return JSON.parse(res).result;
   } catch (e) {
     console.error(e);
-    new Notice(`Error retrieving notes: ${e.message}`, 10000);
+    new Notice(t('Error retrieving notes: {error}', { error: e.message }), 10000);
     return null;
   }
 }
@@ -58,7 +59,7 @@ export async function getCollectionFromCiteKey(
 ) {
   let res: string;
 
-  const modal = new LoadingModal(app, 'Fetching collections from Zotero...');
+  const modal = new LoadingModal(app, t('Fetching collections from Zotero...'));
   modal.open();
 
   const qid = Symbol();
@@ -80,7 +81,7 @@ export async function getCollectionFromCiteKey(
   } catch (e) {
     console.error(e);
     modal.close();
-    new Notice(`Error retrieving notes: ${e.message}`, 10000);
+    new Notice(t('Error retrieving notes: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
     return null;
   }
@@ -109,7 +110,7 @@ export async function getCollectionFromCiteKey(
     });
   } catch (e) {
     console.error(e);
-    new Notice(`Error retrieving notes: ${e.message}`, 10000);
+    new Notice(t('Error retrieving notes: {error}', { error: e.message }), 10000);
     return null;
   }
 }
@@ -120,7 +121,7 @@ export async function getAttachmentsFromCiteKey(
 ) {
   let res: string;
 
-  const modal = new LoadingModal(app, 'Fetching collections from Zotero...');
+  const modal = new LoadingModal(app, t('Fetching collections from Zotero...'));
   modal.open();
 
   const qid = Symbol();
@@ -142,7 +143,7 @@ export async function getAttachmentsFromCiteKey(
   } catch (e) {
     console.error(e);
     modal.close();
-    new Notice(`Error retrieving notes: ${e.message}`, 10000);
+    new Notice(t('Error retrieving notes: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
     return null;
   }
@@ -154,7 +155,7 @@ export async function getAttachmentsFromCiteKey(
     return JSON.parse(res).result;
   } catch (e) {
     console.error(e);
-    new Notice(`Error retrieving notes: ${e.message}`, 10000);
+    new Notice(t('Error retrieving notes: {error}', { error: e.message }), 10000);
     return null;
   }
 }
@@ -216,7 +217,7 @@ export async function getLibForCiteKey(
     }
   } catch (e) {
     console.error(e);
-    new Notice(`Error retrieving library id: ${e.message}`, 10000);
+    new Notice(t('Error retrieving library id: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
   }
 
@@ -245,7 +246,7 @@ export async function getBibFromCiteKeys(
   let res: string;
   let modal: LoadingModal;
   if (!silent) {
-    modal = new LoadingModal(app, 'Fetching data from Zotero...');
+    modal = new LoadingModal(app, t('Fetching data from Zotero...'));
     modal.open();
   }
 
@@ -278,7 +279,7 @@ export async function getBibFromCiteKeys(
   } catch (e) {
     console.error(e);
     !silent && modal.close();
-    new Notice(`Error retrieving formatted bibliography: ${e.message}`, 10000);
+    new Notice(t('Error retrieving formatted bibliography: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
     return null;
   }
@@ -296,10 +297,10 @@ export async function getBibFromCiteKeys(
     console.error(e);
     console.error(`Response from BBT: ${res}`);
 
-    let message = `Error converting formatted bibliography to markdown: ${e.message}`;
+    let message = t('Error converting formatted bibliography to markdown: {error}', { error: e.message });
 
     if ((e.message as string).includes('element/document/fragment')) {
-      message = `Error: Received empty bibliography from Zotero. Ensure Zotero's quick copy settings are set and the selected citation style is installed.`;
+      message = t("Error: Received empty bibliography from Zotero. Ensure Zotero's quick copy settings are set and the selected citation style is installed.");
     }
 
     new Notice(message, 10000);
@@ -314,7 +315,7 @@ export async function getItemJSONFromCiteKeys(
 ) {
   let res: string;
 
-  const modal = new LoadingModal(app, 'Fetching data from Zotero...');
+  const modal = new LoadingModal(app, t('Fetching data from Zotero...'));
   modal.open();
 
   const qid = Symbol();
@@ -340,7 +341,7 @@ export async function getItemJSONFromCiteKeys(
   } catch (e) {
     console.error(e);
     modal.close();
-    new Notice(`Error retrieving item data: ${e.message}`, 10000);
+    new Notice(t('Error retrieving item data: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
     return null;
   }
@@ -359,7 +360,7 @@ export async function getItemJSONFromCiteKeys(
       : JSON.parse(parsed.result).items;
   } catch (e) {
     console.error(e);
-    new Notice(`Error retrieving item data: ${e.message}`, 10000);
+    new Notice(t('Error retrieving item data: {error}', { error: e.message }), 10000);
     return null;
   }
 }
@@ -371,7 +372,7 @@ export async function getItemJSONFromRelations(
 ) {
   let res: string;
 
-  const modal = new LoadingModal(app, 'Fetching data from Zotero...');
+  const modal = new LoadingModal(app, t('Fetching data from Zotero...'));
   modal.open();
 
   const uriMap: Record<string, string> = {};
@@ -403,7 +404,7 @@ export async function getItemJSONFromRelations(
   } catch (e) {
     console.error(e);
     modal.close();
-    new Notice(`Error retrieving item data: ${e.message}`, 10000);
+    new Notice(t('Error retrieving item data: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
     return null;
   }
@@ -428,7 +429,7 @@ export async function getItemJSONFromRelations(
     });
   } catch (e) {
     console.error(e);
-    new Notice(`Error retrieving item data: ${e.message}`, 10000);
+    new Notice(t('Error retrieving item data: {error}', { error: e.message }), 10000);
     return null;
   }
 
@@ -457,7 +458,7 @@ export async function getIssueDateFromCiteKey(
 ) {
   let res: string;
 
-  const modal = new LoadingModal(app, 'Fetching data from Zotero...');
+  const modal = new LoadingModal(app, t('Fetching data from Zotero...'));
   modal.open();
 
   const qid = Symbol();
@@ -483,7 +484,7 @@ export async function getIssueDateFromCiteKey(
   } catch (e) {
     console.error(e);
     modal.close();
-    new Notice(`Error retrieving item data: ${e.message}`, 10000);
+    new Notice(t('Error retrieving item data: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
     return null;
   }
@@ -523,7 +524,7 @@ export async function getIssueDateFromCiteKey(
     return dates[0] ? dates[0] : null;
   } catch (e) {
     console.error(e);
-    new Notice(`Error retrieving item data: ${e.message}`, 10000);
+    new Notice(t('Error retrieving item data: {error}', { error: e.message }), 10000);
     return null;
   }
 }
@@ -548,7 +549,7 @@ export async function execSearch(term: string, database: DatabaseWithPort) {
     });
   } catch (e) {
     console.error(e);
-    new Notice(`Error searching: ${e.message}`, 10000);
+    new Notice(t('Error searching: {error}', { error: e.message }), 10000);
     ZQueue.end(qid);
     return null;
   }
@@ -558,7 +559,7 @@ export async function execSearch(term: string, database: DatabaseWithPort) {
     return JSON.parse(res).result;
   } catch (e) {
     console.error(e);
-    new Notice(`Error searching: ${e.message}`, 10000);
+    new Notice(t('Error searching: {error}', { error: e.message }), 10000);
     return null;
   }
 }

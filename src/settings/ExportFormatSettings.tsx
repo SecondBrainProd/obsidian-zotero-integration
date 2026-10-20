@@ -13,6 +13,7 @@ import {
   customSelectStyles,
   loadCSLOptions,
 } from './select.helpers';
+import { L, t } from '../i18n';
 
 interface FormatSettingsProps {
   format: ExportFormat;
@@ -90,7 +91,7 @@ export function ExportFormatSettings({
   return (
     <div className="zt-format">
       <div className="zt-format__form">
-        <div className="zt-format__label">Name</div>
+        <div className="zt-format__label">{t("Name")}</div>
         <div className="zt-format__input-wrapper">
           <input
             onChange={onChangeStr}
@@ -107,7 +108,7 @@ export function ExportFormatSettings({
       </div>
 
       <div className="zt-format__form">
-        <div className="zt-format__label">Output Path</div>
+        <div className="zt-format__label">{t("Output Path")}</div>
         <div className="zt-format__input-wrapper">
           <input
             onChange={onChangeStr}
@@ -117,14 +118,19 @@ export function ExportFormatSettings({
           />
         </div>
         <div className="zt-format__input-note">
+{L(
+<>
           The file path of the exported markdown. Supports templating, eg{' '}
           <pre>My Folder/{'{{citekey}}'}.md</pre>. Templates have access to data
           from the Zotero item and its first attachment.
-        </div>
+        </>,
+<>Путь к заметке, которую создаст импорт. Поддерживает шаблоны, например{' '}<pre>Моя папка/{'{{citekey}}'}.md</pre>. Шаблону доступны данные записи Zotero и её первого вложения.</>
+)}
+</div>
       </div>
 
       <div className="zt-format__form">
-        <div className="zt-format__label">Image Output Path</div>
+        <div className="zt-format__label">{t("Image Output Path")}</div>
         <div className="zt-format__input-wrapper">
           <input
             onChange={onChangeStr}
@@ -134,14 +140,19 @@ export function ExportFormatSettings({
           />
         </div>
         <div className="zt-format__input-note">
+{L(
+<>
           The folder in which images should be saved. Supports templating, eg{' '}
           <pre>Assets/{'{{citekey}}'}/</pre>. Templates have access to data from
           the Zotero item and its first attachment.
-        </div>
+        </>,
+<>Папка, куда сохраняются изображения. Поддерживает шаблоны, например{' '}<pre>Assets/{'{{citekey}}'}/</pre>. Шаблону доступны данные записи Zotero и её первого вложения.</>
+)}
+</div>
       </div>
 
       <div className="zt-format__form">
-        <div className="zt-format__label">Image Base Name</div>
+        <div className="zt-format__label">{t("Image Base Name")}</div>
         <div className="zt-format__input-wrapper">
           <input
             onChange={onChangeStr}
@@ -151,21 +162,26 @@ export function ExportFormatSettings({
           />
         </div>
         <div className="zt-format__input-note">
+{L(
+<>
           The base file name of exported images. Eg. <pre>image</pre> will
           result in <pre>image-1-x123-y456.jpg</pre> where <pre>1</pre> is the
           page number and <pre>x123</pre> and <pre>y456</pre> are the x and y
           coordinates of rectangle annotation on the page. Supports templating.
           Templates have access to data from the Zotero item and its first
           attachment.
-        </div>
+        </>,
+<>Базовое имя файлов изображений. Например, <pre>image</pre> даст <pre>image-1-x123-y456.jpg</pre>, где <pre>1</pre> — номер страницы, а <pre>x123</pre> и <pre>y456</pre> — координаты прямоугольной аннотации на странице. Поддерживает шаблоны. Шаблону доступны данные записи Zotero и её первого вложения.</>
+)}
+</div>
       </div>
 
       <div className="zt-format__form">
-        <div className="zt-format__label">Template File</div>
+        <div className="zt-format__label">{t("Template File")}</div>
         <div className="zt-format__input-wrapper">
           <AsyncSelect
             noOptionsMessage={NoFileOptionMessage}
-            placeholder="Search..."
+            placeholder={t("Search...")}
             cacheOptions
             defaultValue={defaultTemplate}
             className="zt-multiselect"
@@ -176,6 +192,8 @@ export function ExportFormatSettings({
           />
         </div>
         <div className="zt-format__input-note">
+{L(
+<>
           Open the data explorer from the command pallet to see available
           template data. Templates are written using{' '}
           <a
@@ -194,13 +212,16 @@ export function ExportFormatSettings({
             See the templating documentation here
           </a>
           .
-        </div>
+        </>,
+<>Какие данные доступны шаблону, видно в «Просмотре данных» — команда в палитре. Шаблоны пишутся на{' '}<a href="https://mozilla.github.io/nunjucks/templating.html#variables" target="_blank" rel="noreferrer">Nunjucks</a>.{' '}<a href="https://github.com/mgmeyers/obsidian-zotero-integration/blob/main/docs/Templating.md" target="_blank" rel="noreferrer">Документация по шаблонам</a>.</>
+)}
+</div>
       </div>
 
       {format.headerTemplatePath && (
         <div className="zt-format__form is-deprecated">
           <div className="zt-format__label">
-            Header Template File (deprecated)
+            {t("Header Template File (deprecated)")}
           </div>
           <div className="zt-format__input-wrapper">
             <input type="text" disabled value={format.headerTemplatePath} />
@@ -213,10 +234,12 @@ export function ExportFormatSettings({
                 });
               }}
             >
-              Remove Template
+              {t("Remove Template")}
             </button>
           </div>
           <div className="zt-format__input-note">
+{L(
+<>
             Deprecated: Separate template files are no longer needed.{' '}
             <a
               href="https://github.com/mgmeyers/obsidian-zotero-integration/blob/main/docs/Templating.md"
@@ -226,14 +249,17 @@ export function ExportFormatSettings({
               See the templating documentation here
             </a>
             .
-          </div>
+          </>,
+<>Устарело: отдельные файлы шаблонов больше не нужны. <a href="https://github.com/mgmeyers/obsidian-zotero-integration/blob/main/docs/Templating.md" target="_blank" rel="noreferrer">Подробнее — в документации по шаблонам</a>.</>
+)}
+</div>
         </div>
       )}
 
       {format.annotationTemplatePath && (
         <div className="zt-format__form is-deprecated">
           <div className="zt-format__label">
-            Annotation Template File (deprecated)
+            {t("Annotation Template File (deprecated)")}
           </div>
           <div className="zt-format__input-wrapper">
             <input type="text" disabled value={format.annotationTemplatePath} />
@@ -246,10 +272,12 @@ export function ExportFormatSettings({
                 });
               }}
             >
-              Remove Template
+              {t("Remove Template")}
             </button>
           </div>
           <div className="zt-format__input-note">
+{L(
+<>
             Deprecated: Separate template files are no longer needed.{' '}
             <a
               href="https://github.com/mgmeyers/obsidian-zotero-integration/blob/main/docs/Templating.md"
@@ -259,14 +287,17 @@ export function ExportFormatSettings({
               See the templating documentation here
             </a>
             .
-          </div>
+          </>,
+<>Устарело: отдельные файлы шаблонов больше не нужны. <a href="https://github.com/mgmeyers/obsidian-zotero-integration/blob/main/docs/Templating.md" target="_blank" rel="noreferrer">Подробнее — в документации по шаблонам</a>.</>
+)}
+</div>
         </div>
       )}
 
       {format.footerTemplatePath && (
         <div className="zt-format__form is-deprecated">
           <div className="zt-format__label">
-            Footer Template File (deprecated)
+            {t("Footer Template File (deprecated)")}
           </div>
           <div className="zt-format__input-wrapper">
             <input type="text" disabled value={format.footerTemplatePath} />
@@ -279,10 +310,12 @@ export function ExportFormatSettings({
                 });
               }}
             >
-              Remove Template
+              {t("Remove Template")}
             </button>
           </div>
           <div className="zt-format__input-note">
+{L(
+<>
             Deprecated: Separate template files are no longer needed.{' '}
             <a
               href="https://github.com/mgmeyers/obsidian-zotero-integration/blob/main/docs/Templating.md"
@@ -292,16 +325,19 @@ export function ExportFormatSettings({
               See the templating documentation here
             </a>
             .
-          </div>
+          </>,
+<>Устарело: отдельные файлы шаблонов больше не нужны. <a href="https://github.com/mgmeyers/obsidian-zotero-integration/blob/main/docs/Templating.md" target="_blank" rel="noreferrer">Подробнее — в документации по шаблонам</a>.</>
+)}
+</div>
         </div>
       )}
 
       <div className="zt-format__form">
-        <div className="zt-format__label">Bibliography Style</div>
+        <div className="zt-format__label">{t("Bibliography Style")}</div>
         <div className="zt-format__input-wrapper">
           <AsyncSelect
             noOptionsMessage={NoOptionMessage}
-            placeholder="Search..."
+            placeholder={t("Search...")}
             cacheOptions
             defaultValue={defaultStyle}
             className="zt-multiselect"
@@ -312,6 +348,8 @@ export function ExportFormatSettings({
           />
         </div>
         <div className="zt-format__input-note">
+{L(
+<>
           Note, the chosen style must be installed in Zotero. See{' '}
           <a
             target="_blank"
@@ -320,7 +358,10 @@ export function ExportFormatSettings({
           >
             Zotero: Citation Styles
           </a>
-        </div>
+        </>,
+<>Выбранный стиль должен быть установлен в Zotero. См.{' '}<a target="_blank" href="https://www.zotero.org/support/styles" rel="noreferrer">Zotero: стили цитирования</a></>
+)}
+</div>
       </div>
     </div>
   );

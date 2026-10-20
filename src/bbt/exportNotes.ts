@@ -16,6 +16,7 @@ import { getCiteKeys } from './cayw';
 import { getLocalURI, mkMDDir, sanitizeFilePath } from './helpers';
 import { getAttachmentsFromCiteKey, getNotesFromCiteKeys } from './jsonRPC';
 import { removeStartingSlash } from './template.helpers';
+import { t } from '../i18n';
 
 export async function processZoteroAnnotationNotes(
   key: string,
@@ -70,7 +71,7 @@ export async function processZoteroAnnotationNotes(
             copyFileSync(input, path.join(getVaultRoot(), destPath));
           } catch (e) {
             new Notice(
-              'Error: unable to copy annotation image from Zotero into your vault',
+              t('Error: unable to copy annotation image from Zotero into your vault'),
               7000
             );
             console.error(e);
@@ -142,14 +143,14 @@ export async function noteExportPrompt(
   const notes = await getNotesFromCiteKeys(citeKeys, database);
 
   if (!notes) {
-    new Notice('No notes found for selected items', 7000);
+    new Notice(t('No notes found for selected items'), 7000);
     return;
   }
 
   const keys = Object.keys(notes);
 
   if (!keys.length) {
-    new Notice('No notes found for selected items', 7000);
+    new Notice(t('No notes found for selected items'), 7000);
     return;
   }
 
@@ -278,7 +279,7 @@ export async function newFile(
     }
   } catch (e) {
     console.error(e);
-    new Notice(`Error creating file "${path}": ${e.message}`, 10000);
+    new Notice(t('Error creating file "{path}": {error}', { path, error: e.message }), 10000);
     return null;
   }
 
