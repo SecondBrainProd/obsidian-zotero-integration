@@ -1,31 +1,32 @@
-> [!info] Metadata
+{%- set zt_types = { "book": "Книга", "bookSection": "Раздел книги", "journalArticle": "Статья из рецензируемого журнала", "magazineArticle": "Статья из прочей периодики", "newspaperArticle": "Газетная статья", "thesis": "Диссертация", "letter": "Письмо", "manuscript": "Рукопись", "interview": "Интервью", "film": "Фильм", "artwork": "Художественная работа", "webpage": "Веб-страница", "report": "Отчёт", "bill": "Законопроект", "case": "Дело", "hearing": "Слушание", "patent": "Патент", "statute": "Нормативный правовой акт", "email": "Электронная почта", "map": "Карта", "blogPost": "Сообщение в блоге", "instantMessage": "Мгновенное сообщение", "forumPost": "Сообщение на форуме", "audioRecording": "Звукозапись", "presentation": "Презентация", "videoRecording": "Видеозапись", "tvBroadcast": "Телепередача", "radioBroadcast": "Радиопередача", "podcast": "Подкаст", "computerProgram": "Компьютерная программа", "conferencePaper": "Документ конференции", "document": "Документ", "encyclopediaArticle": "Статья из энциклопедии", "dictionaryEntry": "Словарная статья", "preprint": "Препринт", "dataset": "Набор данных", "standard": "Стандарт" } -%}
+> [!info] Сведения
 > 
 > **Название**:: {{title}}
 >
-> **Автор**:: {{authors}}; {{directors}}
+> **Автор**:: {{authors}}{% if directors %}; {{directors}}{% endif %}
 > **Год издания**:: {{date | format ("YYYY")}}
 >
-> **Тип документа**:: {{itemType | capitalize}}
+> **Тип**:: {{ zt_types[itemType] or itemType }}
 > **Издание**:: {{edition}}
-> **Издательство**: {{publisher}}
+> **Издательство**:: {{publisher}}
 > **Страниц**:: {{numPages}}
 >
-> *Read start*::
-> *Read end*::
+> *Начал читать*::
+> *Дочитал*::
 > 
-> **Tags**:: {% if hashTags %}{{hashTags}} {% endif %}#source/zotero
-> **Keywords**:: {{allTags}}
+> **Теги**:: {% if hashTags %}{{hashTags}} {% endif %}#source/zotero
+> **Ключевые слова**:: {{allTags}}
 > **URL**:: {{url}}
  
-> [!link]+ Zotero Link
+> [!link]+ Ссылка на Zotero
 > 
 >{{pdfZoteroLink}}
  
-> [!abstract]+
+> [!abstract]+ Краткое содержание
 > 
 > {{abstractNote}}
  
-### Книга в трех предложениях
+### Книга в трёх предложениях
  
  
 ### Что из прочитанного я могу применить на практике
@@ -40,15 +41,14 @@
 ### Как эта книга меня изменила
  
  
-### Топ 3 цитат из книги
+### Три главные цитаты
  
  
-### Highlights
+### Выделения
 {% for annotation in annotations -%}
 >[!Quote|{{ annotation.color or annotation.colorCategory }}]+ Цитата
->{%- if annotation.annotatedText -%}*« {{annotation.annotatedText}} »* ([Page {{annotation.page}}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}})){% endif %}{% if annotation.imageRelativePath %}![[{{annotation.imageRelativePath}}]][View on page {{annotation.page}}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}){% endif %}{% if annotation.comment %}
+>{%- if annotation.annotatedText -%}*« {{annotation.annotatedText}} »* ([с. {{annotation.page}}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}&annotation={{annotation.id}})){% endif %}{% if annotation.imageRelativePath %}![[{{annotation.imageRelativePath}}]][Открыть на с. {{annotation.page}}](zotero://open-pdf/library/items/{{annotation.attachment.itemKey}}?page={{annotation.page}}){% endif %}{% if annotation.comment %}
 >
 >{{annotation.comment}}{%- endif %}
  
 {% endfor %}
- 
